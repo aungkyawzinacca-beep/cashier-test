@@ -106,7 +106,7 @@ th{background:#eef2f5}
 
     <div id="opts"></div>
 
-    <button class="primary" onclick="nextQ()">
+    <button class="primary" onclick="nextQuestion()">
       Next Question
     </button>
 
@@ -859,6 +859,10 @@ function updateQuestionTimer(){
 /* =========================
    SAVE QUESTION
 ========================= */
+
+function nextQ(){
+  nextQuestion();
+}
 
 function nextQuestion(){
 
