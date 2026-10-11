@@ -184,7 +184,7 @@ th{background:#eef2f5}
     >
     <p class="muted" style="margin:8px 0 0;">
       Please enter the one-time password provided by A Insurance Finance &amp; Accounts Department.
-      The OTP can be used only once and expires automatically.
+      The OTP is valid for 24 hours, can be used only once, and expires automatically.
     </p>
     <div id="otpStatus" class="status" style="display:none;margin-top:10px;"></div>
   </div>
@@ -215,7 +215,7 @@ th{background:#eef2f5}
   <div class="card">
     <h2 id="qText"></h2>
     <div id="opts"></div>
-    <button class="primary" onclick="nextQ()">Next Question</button>
+    <button id="nextMcqBtn" class="primary" onclick="nextQ(mcqIdx)">Next Question</button>
   </div>
 </div>
 
@@ -226,14 +226,14 @@ th{background:#eef2f5}
     <p>
       Download the Excel workbook, open it in Microsoft Excel,
       complete the yellow answer cells, save the completed
-      <b>.xlsx</b> file, and upload it here.
+      <b>.xlsx</b> file, upload it here, then press Next Section.
     </p>
     <div style="display:flex;justify-content:space-between;gap:20px;align-items:center">
       <b id="cand2"></b>
       <span>Time: <span class="timer" id="excelTimer">10:00</span></span>
     </div>
     <br>
-    <a href="cashier_practical_test_template.xlsx" download class="primary download-link" style="display:inline-block;text-decoration:none">
+    <a href="https://aungkyawzinacca-beep.github.io/cashier-test/cashier_practical_test_template.xlsx" download class="primary download-link" style="display:inline-block;text-decoration:none">
       Download Excel Test File
     </a>
 
@@ -245,7 +245,11 @@ th{background:#eef2f5}
     <br><br>
     <input type="file" id="excelFile" accept=".xlsx,.xls">
     <br><br>
-    <button class="primary" onclick="submitExcelFile()">Submit Excel Test</button>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <button id="submitExcelBtn" class="primary" onclick="submitExcelFile()">Submit Excel Test</button>
+      <button id="nextExcelBtn" type="button" style="background:#6c757d;color:#fff;border:0;border-radius:8px;padding:12px 20px;cursor:pointer" onclick="goNextSectionWithoutUpload()">Next Section</button>
+    </div>
+    <div class="muted" style="margin-top:8px">Upload your completed workbook with “Submit Excel Test”. Use “Next Section” only if you cannot upload; the Excel score will be 0.</div>
     <div id="excelUploadStatus"></div>
   </div>
 </div>
@@ -459,6 +463,7 @@ th{background:#eef2f5}
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx_PjAkAxNJF3KuzX51I-nopjOS4W8JoEOpfU3fSRFz_3hRgpof98E70qj30kvItAhSDw/exec";
@@ -466,7 +471,7 @@ let questions = [];
 let mcqMarks = [];
 let mcqGraded = false;
 const MYANMAR_TEXT = "စာရင်းကိုင်ဌာနသည် နေ့စဉ်ငွေကြေးလွှဲပြောင်းမှုများကို စစ်ဆေးပြီး စာရွက်စာတမ်းများကို မှန်ကန်စွာ သိမ်းဆည်းရမည်။ အချက်အလက်များကို အချိန်မီ မှတ်တမ်းတင်ခြင်းနှင့် အစီရင်ခံစာများကို မှန်ကန်စွာ ပြင်ဆင်ခြင်းသည် လုပ်ငန်း၏ ဘဏ္ဍာရေးစီမံခန့်ခွဲမှုအတွက် အရေးကြီးပါသည်။";
-const ENGLISH_TEXT = "A cashier should record each sale accurately, check receipts and payment records, reconcile the cash drawer, and report discrepancies promptly. Good cashiering depends on careful counting, clear documentation, and consistent attention to detail.";
+const ENGLISH_TEXT = "An Cashier should record transactions accurately, review supporting documents, reconcile balances, and prepare timely financial reports. Good accounting work depends on careful checking, clear documentation, and consistent attention to detail.";
 
 let name = "";
 let testStart = null;
@@ -478,6 +483,8 @@ let qStart = 0;
 let mcqStart = 0;
 let overallInt = null;
 let qInt = null;
+let lastAnsweredQuestionIndex = -1;
+let mcqFinishInProgress = false;
 
 let excelStart = 0;
 let excelInt = null;
@@ -597,6 +604,43 @@ window.addEventListener("beforeunload", function(event){
   return "";
 });
 
+function loadScriptOnce_(urls, globalName){
+  return new Promise(function(resolve, reject){
+    if(window[globalName]) return resolve(window[globalName]);
+    let index = 0;
+    function tryNext(){
+      if(window[globalName]) return resolve(window[globalName]);
+      if(index >= urls.length) return reject(new Error(globalName + " library could not be loaded. Check your internet connection or CDN access."));
+      const script = document.createElement("script");
+      script.src = urls[index++];
+      script.async = true;
+      script.onload = function(){
+        if(window[globalName]) resolve(window[globalName]);
+        else tryNext();
+      };
+      script.onerror = tryNext;
+      document.head.appendChild(script);
+    }
+    tryNext();
+  });
+}
+
+async function loadSheetJS(){
+  if(window.XLSX) return window.XLSX;
+  return await loadScriptOnce_([
+    "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js",
+    "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"
+  ], "XLSX");
+}
+
+async function ensureHtml2PdfLoaded_(){
+  if(typeof window.html2pdf === "function") return window.html2pdf;
+  return await loadScriptOnce_([
+    "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js",
+    "https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"
+  ], "html2pdf");
+}
+
 async function loadQuestions(){
   const response = await fetch(WEB_APP_URL + "?action=getQuestions", {method:"GET", cache:"no-store"});
   if(!response.ok) throw new Error("Could not load the Question Bank.");
@@ -688,6 +732,8 @@ async function startTest(){
     mcqIdx = 0;
     answers = [];
     qTimes = [];
+    lastAnsweredQuestionIndex = -1;
+    mcqFinishInProgress = false;
     mcqStart = Date.now();
 
     showQ();
@@ -757,16 +803,18 @@ function updateOverall(){
 }
 
 function showQ(){
+  if(mcqFinishInProgress || mcqIdx >= questions.length) return;
+  const questionIndex = mcqIdx;
   qStart = Date.now();
 
-  document.getElementById("mcqCounter").textContent = "Question " + (mcqIdx + 1) + " of " + questions.length;
-  document.getElementById("mcqBar").style.width = (mcqIdx / 30 * 100) + "%";
-  document.getElementById("qText").textContent = (mcqIdx + 1) + ". " + questions[mcqIdx].q;
+  document.getElementById("mcqCounter").textContent = "Question " + (questionIndex + 1) + " of " + questions.length;
+  document.getElementById("mcqBar").style.width = (questionIndex / questions.length * 100) + "%";
+  document.getElementById("qText").textContent = (questionIndex + 1) + ". " + questions[questionIndex].q;
 
   const box = document.getElementById("opts");
   box.innerHTML = "";
 
-  questions[mcqIdx].opts.forEach(function(option, i){
+  questions[questionIndex].opts.forEach(function(option, i){
     box.innerHTML +=
       '<label class="option">' +
       '<input type="radio" name="ans" value="' + i + '">' +
@@ -774,43 +822,57 @@ function showQ(){
       '</label>';
   });
 
+  const nextBtn = document.getElementById("nextMcqBtn");
+  if(nextBtn) nextBtn.disabled = false;
   clearInterval(qInt);
-  qInt = setInterval(updateQ,200);
-  updateQ();
+  qInt = setInterval(function(){ updateQ(questionIndex); }, 200);
+  updateQ(questionIndex);
 }
 
-function updateQ(){
+function updateQ(questionIndex){
+  // A queued timer callback from the previous question must never advance the new question.
+  if(questionIndex !== mcqIdx || mcqFinishInProgress) return;
   const remain = 60 - (Date.now() - qStart) / 1000;
-
   document.getElementById("qTimer").textContent = fmt(remain);
-
-  if(remain <= 0) nextQ();
+  if(remain <= 0) nextQ(questionIndex);
 }
 
-function nextQ(){
+function nextQ(expectedIndex){
+  const questionIndex = (typeof expectedIndex === "number") ? expectedIndex : mcqIdx;
+  if(mcqFinishInProgress || questionIndex !== mcqIdx) return;
+  if(questionIndex < 0 || questionIndex >= questions.length) return;
+  // Prevent double-clicks and timer/button races from appending the same question twice.
+  if(lastAnsweredQuestionIndex === questionIndex || answers.length > questionIndex) return;
+  lastAnsweredQuestionIndex = questionIndex;
+
   const selected = document.querySelector('input[name="ans"]:checked');
   const answer = selected ? Number(selected.value) : null;
-
   answers.push(answer);
-  qTimes.push(Math.min(60,(Date.now() - qStart) / 1000));
+  qTimes.push(Math.min(60, Math.max(0, (Date.now() - qStart) / 1000)));
 
+  const nextBtn = document.getElementById("nextMcqBtn");
+  if(nextBtn) nextBtn.disabled = true;
   clearInterval(qInt);
-
-  mcqIdx++;
+  mcqIdx = questionIndex + 1;
 
   if(mcqIdx < questions.length) showQ();
   else finishMCQ(false);
 }
 
 async function finishMCQ(autoEnd){
+  if(mcqFinishInProgress || mcqGraded) return;
+  mcqFinishInProgress = true;
   clearInterval(qInt);
   clearInterval(overallInt);
 
-  if(autoEnd && mcqIdx < 30 && answers.length === mcqIdx){
+  if(autoEnd && mcqIdx < questions.length && answers.length === mcqIdx){
     answers.push(null);
     qTimes.push(Math.min(60,(Date.now() - qStart) / 1000));
   }
 
+  // The server accepts exactly 30 answers. Never submit duplicates or extras.
+  answers = answers.slice(0, questions.length);
+  qTimes = qTimes.slice(0, questions.length);
   while(answers.length < questions.length) answers.push(null);
   while(qTimes.length < questions.length) qTimes.push(0);
 
@@ -961,11 +1023,11 @@ async function submitExcelFile(){
   status.textContent = "Checking the Excel workbook...";
 
   try{
-    if(typeof XLSX === "undefined") await loadSheetJS();
+    if(typeof window.XLSX === "undefined") await loadSheetJS();
 
     const buffer = await file.arrayBuffer();
 
-    const workbook = XLSX.read(
+    const workbook = window.XLSX.read(
       buffer,
       {type:"array", cellFormula:true}
     );
@@ -1011,8 +1073,15 @@ async function submitExcelFile(){
 
     status.className = "status err";
     status.textContent =
-      "Excel file could not be read. Use the provided workbook and save it as .xlsx.";
+      "Excel file could not be read: " + (error && error.message ? error.message : "Please use the provided workbook and save it as .xlsx.");
   }
+}
+
+function goNextSectionWithoutUpload(){
+  if(excelSubmitted) return;
+  const confirmed = confirm("Skip the Excel upload and continue to Section 3? The Excel score will be 0/10.");
+  if(!confirmed) return;
+  finishExcel(true);
 }
 
 function finishExcel(autoEnd){
@@ -1513,12 +1582,33 @@ function showResult(
       return '<tr><td>Q'+(i+1)+'</td><td style="text-align:left">'+escapeHtml(q.q)+'<br><small>A. '+escapeHtml(q.opts[0])+' | B. '+escapeHtml(q.opts[1])+' | C. '+escapeHtml(q.opts[2])+' | D. '+escapeHtml(q.opts[3])+'</small></td><td style="text-align:left">'+escapeHtml(selected)+'</td><td>Withheld</td><td>'+mark+'/1</td><td>'+Number(qTimes[i]||0).toFixed(1)+' sec</td></tr>';
     }).join("") + '</table>';
 
+  function formatExcelDisplayValue(value) {
+    const original = value === null || value === undefined ? "" : String(value);
+    const trimmed = original.trim();
+    if (!trimmed || !/^-?\d+(?:\.\d+)?$/.test(trimmed)) return original;
+    const parts = trimmed.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
+
   document.getElementById("excelBreakdown").innerHTML =
     "<h3>Section 2 – Excel Practical Test Detailed Record</h3>" +
-    '<table><tr><th>Task</th><th>Candidate Actual Value</th><th>Formula</th><th>Expected</th><th>Mark</th></tr>' +
+    '<table class="excel-detail-table" style="width:100%;border-collapse:collapse;border:1px solid #9aa7b2"><thead><tr>' +
+      '<th style="border:1px solid #9aa7b2;padding:8px">Task</th>' +
+      '<th style="border:1px solid #9aa7b2;padding:8px">Candidate Answer</th>' +
+      '<th style="border:1px solid #9aa7b2;border-right:3px solid #52616b;padding:8px">Candidate Formula</th>' +
+      '<th style="border:1px solid #9aa7b2;border-left:3px solid #52616b;padding:8px">Correct Answer</th>' +
+      '<th style="border:1px solid #9aa7b2;padding:8px">Mark</th>' +
+    '</tr></thead><tbody>' +
     savedExcelActual.map(function(item,i){
-      return '<tr><td>Task '+(i+1)+'</td><td style="text-align:left">'+escapeHtml(item.value)+'</td><td style="text-align:left">'+escapeHtml(item.formula)+'</td><td>'+escapeHtml(item.expected)+'</td><td>'+(excelDetails[i]?1:0)+'/1</td></tr>';
-    }).join("") + '</table>' + '<p><b>Uploaded Excel File:</b> '+escapeHtml(uploadedExcelName || "Original workbook")+' — stored in Google Drive and linked in the Recruitment Results sheet.</p>';
+      return '<tr>' +
+        '<td style="border:1px solid #9aa7b2;padding:8px">Task '+(i+1)+'</td>' +
+        '<td style="text-align:left;border:1px solid #9aa7b2;padding:8px">'+escapeHtml(formatExcelDisplayValue(item.value))+'</td>' +
+        '<td style="text-align:left;border:1px solid #9aa7b2;border-right:3px solid #52616b;padding:8px;overflow-wrap:anywhere">'+escapeHtml(item.formula || "Not provided")+'</td>' +
+        '<td style="border:1px solid #9aa7b2;border-left:3px solid #52616b;padding:8px">'+escapeHtml(formatExcelDisplayValue(item.expected))+'</td>' +
+        '<td style="border:1px solid #9aa7b2;padding:8px">'+(excelDetails[i]?1:0)+'/1</td>' +
+      '</tr>';
+    }).join("") + '</tbody></table>' + '<p><b>Uploaded Excel File:</b> '+escapeHtml(uploadedExcelName || "Original workbook")+' — stored in Google Drive and linked in the Recruitment Results sheet.</p>';
 
   document.getElementById("typingBreakdown").innerHTML =
     '<h3>Section 3 – Actual Typing Record</h3>' +
@@ -1714,7 +1804,7 @@ async function sendResult(
         uploadPayload.append("action","uploadExcel");
         uploadPayload.append("resultId",currentResultId);
         uploadPayload.append("name",name);
-        uploadPayload.append("fileName",uploadedExcelName || "cashier_test.xlsx");
+        uploadPayload.append("fileName",uploadedExcelName || "Cashier_test.xlsx");
         uploadPayload.append("mimeType",uploadedExcelMime || "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         uploadPayload.append("fileBase64",uploadedExcelBase64);
 
@@ -1774,8 +1864,9 @@ async function buildResultPdfBlob_(){
     pagebreak: { mode: ["css", "legacy"] }
   };
 
-  // Build the exact same PDF blob used by both Download and Email.
-  return await html2pdf().set(options).from(element).outputPdf("blob");
+  // Load the PDF library with a fallback CDN if the first script did not load.
+  const pdfFactory = await ensureHtml2PdfLoaded_();
+  return await pdfFactory().set(options).from(element).outputPdf("blob");
 }
 
 function downloadBlob_(blob, filename){
