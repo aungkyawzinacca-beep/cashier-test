@@ -913,7 +913,7 @@ function formulaCorrect(formula, i){
   const f = String(formula || "").toLowerCase().replace(/\s/g,"");
   const patterns = [
     /sumif\(b9:b18[,;]"?cash"?[,;]c9:c18\)/, // Total Cash Sales
-    /sumif\(b9:b18[,;]"?card"?[,;]c9:c18\)/, // Total Card Sales
+    /sumif\(b9:b18[,;]"?credit"?[,;]c9:c18\)/, // Total Credit Sales
     /sum\(d9:d18\)/,                         // Total Refunds
     /sum\(c9:c18\)-sum\(d9:d18\)/,           // Net Sales
     /countif\(b9:b18[,;]"?cash"?\)/,         // Cash transaction count
