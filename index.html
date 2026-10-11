@@ -82,7 +82,7 @@ th{background:#eef2f5}
     <h2 style="margin-top:0;text-align:center;">Test Structure</h2>
 
     <div style="margin:18px 0;">
-      <h3 style="margin-bottom:6px;">Section 1 – Accounting MCQ</h3>
+      <h3 style="margin-bottom:6px;">Section 1 – Cashier MCQ</h3>
       <p style="margin:0;">
         30 Questions × 1 Mark = <b>30 Marks</b><br>
         30 Questions × 1 Minute = <b>30 Minutes</b>
@@ -311,7 +311,7 @@ th{background:#eef2f5}
 
     <hr>
 
-    <h2>Section 1 – Accounting MCQ</h2>
+    <h2>Section 1 – Cashier MCQ</h2>
 
     <p>
       <b>Score:</b>
@@ -405,7 +405,7 @@ th{background:#eef2f5}
       </tr>
 
       <tr>
-        <td>Section 1 – Accounting MCQ</td>
+        <td>Section 1 – Cashier MCQ</td>
         <td id="rMcqFinal"></td>
         <td>30</td>
         <td id="rMcqTimeFinal"></td>
@@ -470,8 +470,8 @@ const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx_PjAkAxNJF3KuzX51
 let questions = [];
 let mcqMarks = [];
 let mcqGraded = false;
-const MYANMAR_TEXT = "စာရင်းကိုင်ဌာနသည် နေ့စဉ်ငွေကြေးလွှဲပြောင်းမှုများကို စစ်ဆေးပြီး စာရွက်စာတမ်းများကို မှန်ကန်စွာ သိမ်းဆည်းရမည်။ အချက်အလက်များကို အချိန်မီ မှတ်တမ်းတင်ခြင်းနှင့် အစီရင်ခံစာများကို မှန်ကန်စွာ ပြင်ဆင်ခြင်းသည် လုပ်ငန်း၏ ဘဏ္ဍာရေးစီမံခန့်ခွဲမှုအတွက် အရေးကြီးပါသည်။";
-const ENGLISH_TEXT = "An Cashier should record transactions accurately, review supporting documents, reconcile balances, and prepare timely financial reports. Good accounting work depends on careful checking, clear documentation, and consistent attention to detail.";
+const MYANMAR_TEXT = "Cashier သည် ငွေလက်ခံမှု၊ ငွေပြန်အမ်းမှုနှင့် နေ့စဉ်ငွေစာရင်းများကို တိကျစွာ မှတ်တမ်းတင်ပြီး အဆိုင်းအဆုံးတွင် ငွေသားနှင့် မှတ်တမ်းများကို ပြန်လည်တိုက်ဆိုင်စစ်ဆေးရမည်။";
+const ENGLISH_TEXT = "A cashier should record transactions accurately, review supporting documents, reconcile balances, and prepare timely financial reports. Good accounting work depends on careful checking, clear documentation, and consistent attention to detail.";
 
 let name = "";
 let testStart = null;
@@ -911,26 +911,24 @@ function updateExcel(){
 
 function formulaCorrect(formula, i){
   const f = String(formula || "").toLowerCase().replace(/\s/g,"");
-
   const patterns = [
-    /sum\(c9:c18\)/,
-    /sum\(d9:d18\)/,
-    /average\(c9:c18\)/,
-    /sumif\(b9:b18[,;]"?sales"?[,;]c9:c18\)/,
-    /countif\(b9:b18[,;]"?admin"?\)/,
-    /sum\(c9:c18\)-sum\(d9:d18\)/,
-    /(?:c9:c18|898000|e22).*(?:\*|×)0?\.?05|5%/,
-    /e22\+e28|e22\*1\.05/,
-    /if\(/,
-    /max\(c9:c18\)/
+    /sumif\(b9:b18[,;]"?cash"?[,;]c9:c18\)/, // Total Cash Sales
+    /sumif\(b9:b18[,;]"?card"?[,;]c9:c18\)/, // Total Card Sales
+    /sum\(d9:d18\)/,                         // Total Refunds
+    /sum\(c9:c18\)-sum\(d9:d18\)/,           // Net Sales
+    /countif\(b9:b18[,;]"?cash"?\)/,         // Cash transaction count
+    /sumif\(b9:b18[,;]"?cash"?[,;]c9:c18\).*sumif\(b9:b18[,;]"?cash"?[,;]d9:d18\)/, // Expected net cash
+    /average\(c9:c18\)/,                      // Average sale
+    /sum\(c9:c18\)/,                          // Gross sales
+    /if\(.*e32.*e27.*(short|over|balanced)/,  // Cash status
+    /max\(c9:c18\)/                           // Largest sale
   ];
-
   return Boolean(patterns[i] && patterns[i].test(f));
 }
 
 const excelExpected = [
-  898000, 550000, 89800, 483000, 3,
-  348000, 44900, 942900, "profit", 150000
+  35000, 45000, 5000, 75000, 5,
+  34000, 8000, 80000, "SHORT", 15000
 ];
 
 function gradeExcelWorkbook(workbook){
@@ -954,7 +952,7 @@ function gradeExcelWorkbook(workbook){
 
       if(i === 8){
         correct =
-          String(value ?? "").trim().toLowerCase() === "profit" ||
+          String(value ?? "").trim().toUpperCase() === "SHORT" ||
           formulaCorrect(formula,i);
       }else{
         const numeric = Number(String(value ?? "").replace(/[$,\s]/g,""));
@@ -1323,7 +1321,7 @@ function getSystemComment(finalScore){
     return "Needs Improvement";
   };
 
-  return "Section 1 – Accounting MCQ: " + mcq.toFixed(2) + "/30 (" +
+  return "Section 1 – Cashier MCQ: " + mcq.toFixed(2) + "/30 (" +
     sectionStatus(mcq,30) + "). " +
     "Section 2 – Excel Practical Test: " + excel.toFixed(2) + "/10 (" +
     sectionStatus(excel,10) + "). " +
@@ -1574,7 +1572,7 @@ function showResult(
       : (excelTimedOut ? "Completed — Excel time limit reached" : "Completed");
 
   document.getElementById("mcqBreakdown").innerHTML =
-    "<h3>Section 1 – Accounting MCQ Detailed Answer Record</h3>" +
+    "<h3>Section 1 – Cashier MCQ Detailed Answer Record</h3>" +
     '<table><tr><th>Q</th><th>Question</th><th>Candidate Selected</th><th>Correct Answer</th><th>Mark</th><th>Time</th></tr>' +
     questions.map(function(q,i){
       const selected = answers[i] === null || answers[i] === undefined ? "Not Answered" : String.fromCharCode(65+answers[i]) + ". " + q.opts[answers[i]];
@@ -1900,7 +1898,7 @@ async function downloadPDF(){
     console.error(error);
     if(status){
       status.className = "status err";
-      status.textContent = "Could not create the Result PDF.";
+      status.textContent = "Could not create the Result PDF. Check internet/CDN access and try again.";
     }
   }
 }
