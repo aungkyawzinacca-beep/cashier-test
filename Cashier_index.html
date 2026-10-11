@@ -1,0 +1,1881 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cashier Recruitment Test — 45 Marks</title>
+<style>
+body{font-family:Arial,"Noto Sans Myanmar",sans-serif;background:#f4f6f8;color:#17202a;margin:0}
+.container{max-width:960px;margin:22px auto;padding:18px}
+.card{background:#fff;padding:24px;border-radius:14px;box-shadow:0 3px 15px #0001;margin-bottom:18px}
+.hidden{display:none}.muted{color:#66717b}
+.timer{font-size:24px;font-weight:700}
+.progress{height:8px;background:#e5e8eb;border-radius:6px;overflow:hidden;margin:15px 0}
+.bar{height:100%;background:#1769aa;width:0}
+button,.download-link{padding:12px 18px;border:0;border-radius:8px;cursor:pointer;font-size:15px}
+.primary{background:#1769aa;color:#fff}.secondary{background:#e8edf1;color:#17202a}
+.option{display:block;border:1px solid #d4dbe1;padding:13px;margin:10px 0;border-radius:8px;cursor:pointer}
+.option:hover{background:#f5f9fc}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #d5dbe0;padding:8px;text-align:center}
+th{background:#eef2f5}
+.status{padding:12px;border-radius:8px;margin-top:12px}
+.saving{background:#fff8e1}.ok{background:#e8f5e9}.err{background:#ffebee}
+.typing-target{padding:18px;background:#f7f9fb;border:1px solid #dbe1e6;border-radius:10px;line-height:1.8;font-size:18px;margin:12px 0}
+.typing-target.mm{font-family:"Noto Sans Myanmar","Myanmar Text",sans-serif;font-size:20px}
+.typing-input{min-height:160px;resize:vertical;font-size:18px;line-height:1.7}
+.comment-box{width:100%;min-height:150px;padding:13px;box-sizing:border-box;border:1px solid #cfd8dc;border-radius:8px;font-family:inherit;font-size:16px;line-height:1.6;resize:vertical}
+.actual-text{white-space:pre-wrap;background:#f7f9fb;border:1px solid #dbe1e6;padding:12px;border-radius:8px;line-height:1.7;max-height:260px;overflow:auto}
+.comment-panel{margin-top:18px;padding:18px;border-radius:10px;border:1px solid #dbe1e6}
+.system-comment{background:#f4f8fc}
+.finance-comment{background:#fffaf0}
+
+@media print{.no-print{display:none!important}body{background:#fff}.card{box-shadow:none}}
+@media print{
+  body{font-family:Arial,"Noto Sans Myanmar","Myanmar Text",sans-serif;font-size:12px}
+  h1,h2,h3,h4,p,td,th,button,div,span{font-family:Arial,"Noto Sans Myanmar","Myanmar Text",sans-serif}
+  table{font-size:11px}
+  button{display:none!important}
+  .no-print{display:none!important}
+}
+
+.section-review{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid #d9ddea;
+  border-radius:10px;
+  background:#f8f9fc;
+}
+.section-review h3{margin:0 0 8px;font-size:18px}
+.section-review p{margin:6px 0;line-height:1.55}
+.section-review ul{margin:8px 0 0 20px}
+.section-review .review-label{font-weight:700}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+
+<div id="start" class="card">
+
+  <div style="text-align:center;">
+
+    <img
+      src="data:image/png;base64,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"
+      alt="A Insurance"
+      style="width:220px;max-width:55%;height:auto;margin:0 auto 12px;display:block;"
+    >
+
+    <p style="font-size:16px;font-weight:600;color:#66717b;margin:0 0 8px;">
+      Finance &amp; Accounts Department
+    </p>
+
+    <h1 style="font-size:34px;margin:18px 0 10px;">
+      Cashier Position Professional Test
+    </h1>
+
+  </div>
+
+  <div style="background:#f7f9fb;border:1px solid #dbe1e6;border-radius:12px;padding:20px;margin-top:20px;">
+
+    <h2 style="margin-top:0;text-align:center;">Test Structure</h2>
+
+    <div style="margin:18px 0;">
+      <h3 style="margin-bottom:6px;">Section 1 – Accounting MCQ</h3>
+      <p style="margin:0;">
+        30 Questions × 1 Mark = <b>30 Marks</b><br>
+        30 Questions × 1 Minute = <b>30 Minutes</b>
+      </p>
+    </div>
+
+    <div style="margin:18px 0;">
+      <h3 style="margin-bottom:6px;">Section 2 – Excel Practical Test</h3>
+      <p style="margin:0;">
+        10 Tasks × 1 Mark = <b>10 Marks</b><br>
+        10 Tasks × 1 Minute = <b>10 Minutes</b>
+      </p>
+    </div>
+
+    <div style="margin:18px 0;">
+      <h3 style="margin-bottom:6px;">Section 3 – Typing Test</h3>
+      <p style="margin:0;">
+        Myanmar Font + English Font = <b>5 Marks</b><br>
+        Time Limit = <b>5 Minutes</b>
+      </p>
+    </div>
+
+    <div style="
+      text-align:center;
+      font-size:24px;
+      font-weight:700;
+      margin-top:22px;
+      padding:14px;
+      border-radius:10px;
+      background:#eaf2f8;
+    ">
+      Total: 45 Marks | Total Time: 45 Minutes
+    </div>
+
+  </div>
+
+  <div style="
+    margin-top:20px;
+    padding:18px;
+    border-left:5px solid #1769aa;
+    background:#f8fafc;
+    border-radius:8px;
+  ">
+
+    <h2 style="margin-top:0;">Test Instructions</h2>
+
+    <ul style="line-height:1.8;margin-bottom:0;">
+      <li>Complete each section early to proceed to the next section immediately.</li>
+      <li>When the time limit for a section is reached, the section will automatically end and the next section will begin.</li>
+      <li>Do not use mobile phones or search the internet for answers during the test.</li>
+      <li>Do not use any unauthorized external or technical assistance devices.</li>
+      <li>Please answer all questions independently.</li>
+    </ul>
+
+  </div>
+
+  <div class="browser-warning" role="alert" style="
+    margin-top:20px;
+    padding:18px 20px;
+    border:2px solid #b42318;
+    background:#fff1f0;
+    color:#8a1c13;
+    border-radius:10px;
+    box-shadow:0 2px 8px #0001;
+  ">
+    <div style="font-size:19px;font-weight:800;margin-bottom:7px;">
+      ⚠ IMPORTANT — DO NOT CLOSE OR REFRESH YOUR BROWSER
+    </div>
+    <div style="font-size:15px;line-height:1.7;">
+      Once the test starts, <b>do not close this browser, refresh the page, or leave the test page</b>
+      before the final result is saved. If the browser is closed or the page is refreshed before
+      submission, your test attempt and score <b>will not be recorded</b>, and you may lose the opportunity
+      to complete this attempt.
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <label><b>Candidate Name</b></label>
+
+    <input
+      id="candidateName"
+      placeholder="Enter Candidate Name"
+      autocomplete="name"
+      style="width:100%;margin-top:8px;padding:13px;font-size:16px;box-sizing:border-box;"
+    >
+  </div>
+
+  <div style="margin-top:16px;">
+    <label><b>One-Time Password (OTP)</b></label>
+
+    <input
+      id="candidateOtp"
+      type="password"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="Enter 6-digit OTP"
+      autocomplete="one-time-code"
+      style="width:100%;margin-top:8px;padding:13px;font-size:18px;box-sizing:border-box;letter-spacing:4px;text-align:center;"
+    >
+    <p class="muted" style="margin:8px 0 0;">
+      Please enter the one-time password provided by A Insurance Finance &amp; Accounts Department.
+      The OTP can be used only once and expires automatically.
+    </p>
+    <div id="otpStatus" class="status" style="display:none;margin-top:10px;"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px;">
+    <button
+      id="startTestBtn"
+      class="primary"
+      onclick="startTest()"
+      style="min-width:180px;font-size:17px;"
+    >
+      Verify OTP &amp; Start Test
+    </button>
+  </div>
+
+</div>
+
+<div id="mcq" class="hidden">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:15px;align-items:center">
+<div id="mcqStatus" class="status saving" style="display:none"></div>
+      <div><b id="cand1"></b><div id="mcqCounter"></div></div>
+      <div>Overall: <span class="timer" id="overall">30:00</span></div>
+    </div>
+    <div class="progress"><div class="bar" id="mcqBar"></div></div>
+    Question time: <span class="timer" id="qTimer">01:00</span>
+  </div>
+  <div class="card">
+    <h2 id="qText"></h2>
+    <div id="opts"></div>
+    <button class="primary" onclick="nextQ()">Next Question</button>
+  </div>
+</div>
+
+<div id="excel" class="hidden">
+  <div class="card">
+    <h1>Section 2 – Excel Practical Test</h1>
+    <p><b>10 Marks • 10 Minutes</b></p>
+    <p>
+      Download the Excel workbook, open it in Microsoft Excel,
+      complete the yellow answer cells, save the completed
+      <b>.xlsx</b> file, and upload it here.
+    </p>
+    <div style="display:flex;justify-content:space-between;gap:20px;align-items:center">
+      <b id="cand2"></b>
+      <span>Time: <span class="timer" id="excelTimer">10:00</span></span>
+    </div>
+    <br>
+    <a href="cashier_practical_test_template.xlsx" download class="primary download-link" style="display:inline-block;text-decoration:none">
+      Download Excel Test File
+    </a>
+
+    <p class="muted" style="margin-top:10px;">
+      Please open this test from the GitHub Pages website. The Excel file is hosted with the test website.
+    </p>
+    <hr>
+    <label><b>Upload Completed Excel File (.xlsx)</b></label>
+    <br><br>
+    <input type="file" id="excelFile" accept=".xlsx,.xls">
+    <br><br>
+    <button class="primary" onclick="submitExcelFile()">Submit Excel Test</button>
+    <div id="excelUploadStatus"></div>
+  </div>
+</div>
+
+<div id="typing" class="hidden">
+  <div class="card">
+    <h1>Section 3 – Typing Test</h1>
+    <p><b>5 Marks • 5 Minutes</b></p>
+    <p class="muted">
+      Myanmar Font: 2.5 Marks / 2.5 Minutes<br>
+      English Font: 2.5 Marks / 2.5 Minutes
+    </p>
+    <div style="display:flex;justify-content:space-between;gap:20px;align-items:center">
+      <b id="cand3"></b>
+      <span>Section Time: <span class="timer" id="typingTimer">02:30</span></span>
+    </div>
+  </div>
+
+  <div id="typingMyanmar" class="card">
+    <h2>Myanmar Font Typing</h2>
+    <p class="muted">Type the text below exactly as shown.</p>
+    <div id="myanmarTarget" class="typing-target mm"></div>
+    <textarea id="myanmarInput" class="typing-input" placeholder="မြန်မာစာကို ဒီနေရာမှာ ရိုက်ပါ..." spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+    <p>Accuracy: <b id="myanmarAccuracy">0%</b></p>
+
+    <button class="primary" onclick="startEnglishTyping()">
+      Finish Myanmar & Continue
+    </button>
+  </div>
+
+  <div id="typingEnglish" class="card hidden">
+    <h2>English Font Typing</h2>
+    <p class="muted">Type the text below exactly as shown.</p>
+    <div id="englishTarget" class="typing-target"></div>
+    <textarea id="englishInput" class="typing-input" placeholder="Type the English text here..." spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+    <p>Accuracy: <b id="englishAccuracy">0%</b></p>
+
+    <button class="primary" onclick="finishTyping(false)">
+      Finish Typing & View Result
+    </button>
+  </div>
+</div>
+
+
+<div id="result" class="hidden">
+
+  <div class="card" id="printArea">
+
+    <h1>Cashier Position Professional Test – Final Result</h1>
+
+    <p>
+      <b>Candidate:</b>
+      <span id="rName"></span>
+      &nbsp; | &nbsp; <b>Test Date:</b> <span id="rDate"></span>
+      &nbsp; | &nbsp; <b>Start Time:</b> <span id="rStart"></span>
+      &nbsp; | &nbsp; <b>End Time:</b> <span id="rEnd"></span>
+      &nbsp; | &nbsp; <b>Time Taken:</b> <span id="rTimeTaken"></span>
+    </p>
+
+    <hr>
+
+    <h2>Section 1 – Accounting MCQ</h2>
+
+    <p>
+      <b>Score:</b>
+      <span id="rMcq"></span> / 30
+      &nbsp; | &nbsp;
+      <b>Time:</b>
+      <span id="rMcqTime"></span>
+    </p>
+
+    <div id="mcqBreakdown"></div>
+    <div id="mcqSectionReview" class="comment-panel section-review"></div>
+
+    <hr>
+
+    <h2>Section 2 – Excel Practical Test</h2>
+
+    <p>
+      <b>Score:</b>
+      <span id="rExcel"></span> / 10
+      &nbsp; | &nbsp;
+      <b>Time:</b>
+      <span id="rExcelTime"></span>
+    </p>
+
+    <div id="excelBreakdown"></div>
+    <div id="excelSectionReview" class="comment-panel section-review"></div>
+
+    <hr>
+
+    <h2>Section 3 – Typing Test</h2>
+
+    <p>
+      <b>Total Typing Score:</b>
+      <span id="rTyping"></span> / 5
+      &nbsp; | &nbsp;
+      <b>Time:</b>
+      <span id="rTypingTime"></span>
+    </p>
+
+    <table>
+      <tr>
+        <th>Typing Section</th>
+        <th>Score</th>
+        <th>Accuracy</th>
+        <th>Typed</th>
+        <th>Correct</th>
+        <th>Errors</th>
+        <th>Missing</th>
+        <th>CPM (Characters/Min)</th>
+        <th>Time</th>
+      </tr>
+
+      <tr>
+        <td>Myanmar Font</td>
+        <td id="rMyanmar"></td>
+        <td id="rMyanmarAccuracy"></td>
+        <td id="rMyanmarTyped"></td>
+        <td id="rMyanmarCorrect"></td>
+        <td id="rMyanmarErrors"></td>
+        <td id="rMyanmarMissing"></td>
+        <td id="rMyanmarSpeed"></td>
+        <td id="rMyanmarTime"></td>
+      </tr>
+
+      <tr>
+        <td>English Font</td>
+        <td id="rEnglish"></td>
+        <td id="rEnglishAccuracy"></td>
+        <td id="rEnglishTyped"></td>
+        <td id="rEnglishCorrect"></td>
+        <td id="rEnglishErrors"></td>
+        <td id="rEnglishMissing"></td>
+        <td id="rEnglishSpeed"></td>
+        <td id="rEnglishTime"></td>
+      </tr>
+    </table>
+
+    <hr>
+
+    <div id="typingBreakdown"></div>
+    <div id="typingSectionReview" class="comment-panel section-review"></div>
+
+    <h2>Final Result</h2>
+
+    <table>
+      <tr>
+        <th>Section</th>
+        <th>Score</th>
+        <th>Maximum</th>
+        <th>Time</th>
+      </tr>
+
+      <tr>
+        <td>Section 1 – Accounting MCQ</td>
+        <td id="rMcqFinal"></td>
+        <td>30</td>
+        <td id="rMcqTimeFinal"></td>
+      </tr>
+
+      <tr>
+        <td>Section 2 – Excel Practical Test</td>
+        <td id="rExcelFinal"></td>
+        <td>10</td>
+        <td id="rExcelTimeFinal"></td>
+      </tr>
+
+      <tr>
+        <td>Section 3 – Typing Test</td>
+        <td id="rTypingFinal"></td>
+        <td>5</td>
+        <td id="rTypingTimeFinal"></td>
+      </tr>
+
+      <tr>
+        <th>FINAL SCORE</th>
+        <th id="rTotal"></th>
+        <th>45</th>
+        <th id="rTotalTime"></th>
+      </tr>
+    </table>
+
+    <p>
+      <b>Completion:</b>
+      <span id="rCompletion"></span>
+    </p>
+
+    <div class="comment-panel system-comment">
+      <h2>Final System Review</h2>
+      <p id="systemCommentText"></p>
+    </div>
+
+    <div id="saveStatus"
+ class="status saving">
+      Saving final result to Google Sheet...
+    </div>
+
+  </div>
+
+  <div class="no-print">
+    <div id="pdfFileNameDisplay" class="muted" style="margin:12px 0;font-weight:600;"></div>
+    <button class="primary" onclick="downloadPDF()">
+      Download / Save Result PDF
+    </button>
+    <button class="primary" onclick="emailResultPDF()" style="margin-left:8px;">
+      Email Result PDF
+    </button>
+    <div id="emailStatus" class="muted" style="margin-top:10px;"></div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx_PjAkAxNJF3KuzX51I-nopjOS4W8JoEOpfU3fSRFz_3hRgpof98E70qj30kvItAhSDw/exec";
+let questions = [];
+let mcqMarks = [];
+let mcqGraded = false;
+const MYANMAR_TEXT = "စာရင်းကိုင်ဌာနသည် နေ့စဉ်ငွေကြေးလွှဲပြောင်းမှုများကို စစ်ဆေးပြီး စာရွက်စာတမ်းများကို မှန်ကန်စွာ သိမ်းဆည်းရမည်။ အချက်အလက်များကို အချိန်မီ မှတ်တမ်းတင်ခြင်းနှင့် အစီရင်ခံစာများကို မှန်ကန်စွာ ပြင်ဆင်ခြင်းသည် လုပ်ငန်း၏ ဘဏ္ဍာရေးစီမံခန့်ခွဲမှုအတွက် အရေးကြီးပါသည်။";
+const ENGLISH_TEXT = "A cashier should record each sale accurately, check receipts and payment records, reconcile the cash drawer, and report discrepancies promptly. Good cashiering depends on careful counting, clear documentation, and consistent attention to detail.";
+
+let name = "";
+let testStart = null;
+let testEnd = null;
+let mcqIdx = 0;
+let answers = [];
+let qTimes = [];
+let qStart = 0;
+let mcqStart = 0;
+let overallInt = null;
+let qInt = null;
+
+let excelStart = 0;
+let excelInt = null;
+let excelSubmitted = false;
+
+let typingInt = null;
+let typingSection = "myanmar";
+let myanmarStart = 0;
+let englishStart = 0;
+
+let savedMcqScore = 0;
+let savedExcelScore = 0;
+let savedMcqTime = 0;
+let savedExcelTime = 0;
+let savedExcelDetails = [];
+let excelTimedOut = false;
+let currentResultId = "";
+let currentSystemComment = "";
+let savedExcelActual = [];
+let excelFileUrl = "";
+let actualMyanmarText = "";
+let actualEnglishText = "";
+let uploadedExcelBase64 = "";
+let uploadedExcelName = "";
+let uploadedExcelMime = "";
+let otpVerified = false;
+let otpRecordId = "";
+let testActive = false;
+
+function formatDate(d){ return new Intl.DateTimeFormat("en-GB", {year:"numeric",month:"2-digit",day:"2-digit"}).format(d); }
+function formatDateTime(d){ return new Intl.DateTimeFormat("en-GB", {year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(d); }
+function formatTimeOnly(d){ return new Intl.DateTimeFormat("en-GB", {hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(d); }
+function safeFileName(value){
+  return String(value || "Candidate").trim()
+    .replace(/[\\/:*?"<>|]/g,"_")
+    .replace(/\s+/g,"_")
+    .replace(/_+/g,"_")
+    .replace(/^_+|_+$/g,"") || "Candidate";
+}
+
+function fmt(seconds){
+  seconds = Math.max(0, Math.ceil(seconds));
+  return String(Math.floor(seconds / 60)).padStart(2,"0") + ":" + String(seconds % 60).padStart(2,"0");
+}
+
+function cleanText(value){
+  return String(value ?? "")
+    .replace(/\r\n/g,"\n")
+    .replace(/\r/g,"\n")
+    .trim();
+}
+
+function escapeHtml(value){
+  return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function calcTypingAccuracy(target, typed){
+  target = cleanText(target);
+  typed = cleanText(typed);
+
+  if(!typed.length) return 0;
+
+  const maxLength = Math.max(target.length, typed.length);
+  let correct = 0;
+
+  for(let i=0; i<Math.min(target.length, typed.length); i++){
+    if(target[i] === typed[i]) correct++;
+  }
+
+  return (correct / maxLength) * 100;
+}
+
+function typingScore(target, typed, maxMarks){
+  return maxMarks * calcTypingAccuracy(target, typed) / 100;
+}
+
+function typingMetrics(target, typed, seconds){
+  target = cleanText(target);
+  typed = cleanText(typed);
+  seconds = Math.max(0.1, Number(seconds || 0));
+
+  const compareLength = Math.min(target.length, typed.length);
+  let correct = 0;
+
+  for(let i = 0; i < compareLength; i++){
+    if(target[i] === typed[i]){
+      correct++;
+    }
+  }
+
+  // Errors = characters the candidate actually typed incorrectly.
+  // Missing = target characters the candidate did not type.
+  // An empty answer therefore has 0 Errors, not the full target length.
+  const substitutions = compareLength - correct;
+  const missing = Math.max(0, target.length - typed.length);
+  const extra = Math.max(0, typed.length - target.length);
+
+  const errors = substitutions + extra;
+  const accuracy = target.length ? (correct / target.length) * 100 : 0;
+  const cpm = typed.length ? (typed.length / seconds) * 60 : 0;
+
+  return {
+    typed: typed.length,
+    correct: correct,
+    errors: errors,
+    missing: missing,
+    accuracy: accuracy,
+    cpm: cpm
+  };
+}
+
+// Protect the active test from accidental browser close, refresh, or navigation.
+window.addEventListener("beforeunload", function(event){
+  if(!testActive) return;
+  event.preventDefault();
+  event.returnValue = "";
+  return "";
+});
+
+async function loadQuestions(){
+  const response = await fetch(WEB_APP_URL + "?action=getQuestions", {method:"GET", cache:"no-store"});
+  if(!response.ok) throw new Error("Could not load the Question Bank.");
+  const data = await response.json();
+  if(!data || !data.success || !Array.isArray(data.questions)) throw new Error("Question Bank is unavailable.");
+  if(data.questions.length !== 30) throw new Error("Question Bank must contain exactly 30 active MCQ questions.");
+  if(data.questions.some(q => !q.id || !String(q.q || "").trim() || !Array.isArray(q.opts) || q.opts.length !== 4 || q.opts.some(o => !String(o || "").trim()))) {
+    throw new Error("Please check the Question Bank: each active MCQ needs a question and four options.");
+  }
+  questions = data.questions;
+}
+
+async function gradeMcqOnServer(){
+  const payload = new URLSearchParams();
+  payload.append("action", "gradeMCQ");
+  payload.append("resultId", currentResultId);
+  payload.append("answers", JSON.stringify(answers));
+  const response = await fetch(WEB_APP_URL, {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body:payload.toString()
+  });
+  const text = await response.text();
+  let result;
+  try { result = JSON.parse(text); } catch(e) { throw new Error("Server returned an invalid MCQ scoring response."); }
+  if(!response.ok || !result.success || !Array.isArray(result.marks) || result.marks.length !== questions.length) {
+    throw new Error(result.error || "Could not score the MCQ answers on the server.");
+  }
+  mcqMarks = result.marks.map(v => Number(v) === 1 ? 1 : 0);
+  savedMcqScore = Number(result.score) || 0;
+  mcqGraded = true;
+}
+
+async function startTest(){
+  const candidateName = document.getElementById("candidateName").value.trim();
+  const otp = document.getElementById("candidateOtp").value.trim();
+  const btn = document.getElementById("startTestBtn");
+  const status = document.getElementById("otpStatus");
+
+  if(!candidateName){
+    alert("Please enter candidate name.");
+    return;
+  }
+
+  if(!/^\d{6}$/.test(otp)){
+    alert("Please enter the 6-digit OTP provided by A Insurance.");
+    return;
+  }
+
+  if(otpVerified){
+    return;
+  }
+
+  name = candidateName;
+  currentResultId = "CSH-" + Date.now() + "-" + Math.random().toString(36).slice(2,8).toUpperCase();
+
+  btn.disabled = true;
+  btn.textContent = "Verifying OTP...";
+  status.style.display = "block";
+  status.className = "status saving";
+  status.textContent = "Verifying your one-time password...";
+
+  try{
+    const verification = await verifyCandidateOTP(candidateName, otp, currentResultId);
+
+    if(!verification || !verification.success){
+      throw new Error((verification && verification.error) || "OTP verification failed.");
+    }
+
+    otpVerified = true;
+    otpRecordId = verification.otpRecordId || "";
+    status.className = "status ok";
+    status.textContent = "OTP verified. Loading questions...";
+    await loadQuestions();
+
+    status.className = "status ok";
+    status.textContent = "OTP verified successfully. Starting the test...";
+    mcqMarks = [];
+    mcqGraded = false;
+    savedMcqScore = 0;
+
+    testStart = new Date();
+    testActive = true;
+
+    document.getElementById("start").classList.add("hidden");
+    document.getElementById("mcq").classList.remove("hidden");
+    document.getElementById("cand1").textContent = name;
+
+    mcqIdx = 0;
+    answers = [];
+    qTimes = [];
+    mcqStart = Date.now();
+
+    showQ();
+    overallInt = setInterval(updateOverall,250);
+
+  }catch(error){
+    console.error(error);
+    btn.disabled = false;
+    btn.textContent = "Verify OTP & Start Test";
+    status.className = "status err";
+    status.textContent = error.message || "OTP verification failed.";
+  }
+}
+
+function verifyCandidateOTP(candidateName, otp, resultId){
+  return new Promise(function(resolve, reject){
+    const callbackName = "otpCallback_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
+    const script = document.createElement("script");
+    let settled = false;
+
+    const cleanup = function(){
+      try{ delete window[callbackName]; }catch(e){}
+      if(script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    const timer = setTimeout(function(){
+      if(settled) return;
+      settled = true;
+      cleanup();
+      reject(new Error("OTP verification timed out. Please try again."));
+    }, 15000);
+
+    window[callbackName] = function(data){
+      if(settled) return;
+      settled = true;
+      clearTimeout(timer);
+      cleanup();
+      resolve(data);
+    };
+
+    script.onerror = function(){
+      if(settled) return;
+      settled = true;
+      clearTimeout(timer);
+      cleanup();
+      reject(new Error("Could not connect to the OTP verification service."));
+    };
+
+    const url = WEB_APP_URL
+      + "?action=verifyOTP"
+      + "&name=" + encodeURIComponent(candidateName)
+      + "&otp=" + encodeURIComponent(otp)
+      + "&resultId=" + encodeURIComponent(resultId)
+      + "&callback=" + encodeURIComponent(callbackName);
+
+    script.src = url;
+    document.head.appendChild(script);
+  });
+}
+
+function updateOverall(){
+  const remain = 1800 - (Date.now() - mcqStart) / 1000;
+
+  document.getElementById("overall").textContent = fmt(remain);
+
+  if(remain <= 0) finishMCQ(true);
+}
+
+function showQ(){
+  qStart = Date.now();
+
+  document.getElementById("mcqCounter").textContent = "Question " + (mcqIdx + 1) + " of " + questions.length;
+  document.getElementById("mcqBar").style.width = (mcqIdx / 30 * 100) + "%";
+  document.getElementById("qText").textContent = (mcqIdx + 1) + ". " + questions[mcqIdx].q;
+
+  const box = document.getElementById("opts");
+  box.innerHTML = "";
+
+  questions[mcqIdx].opts.forEach(function(option, i){
+    box.innerHTML +=
+      '<label class="option">' +
+      '<input type="radio" name="ans" value="' + i + '">' +
+      ' ' + String.fromCharCode(65+i) + '. ' + option +
+      '</label>';
+  });
+
+  clearInterval(qInt);
+  qInt = setInterval(updateQ,200);
+  updateQ();
+}
+
+function updateQ(){
+  const remain = 60 - (Date.now() - qStart) / 1000;
+
+  document.getElementById("qTimer").textContent = fmt(remain);
+
+  if(remain <= 0) nextQ();
+}
+
+function nextQ(){
+  const selected = document.querySelector('input[name="ans"]:checked');
+  const answer = selected ? Number(selected.value) : null;
+
+  answers.push(answer);
+  qTimes.push(Math.min(60,(Date.now() - qStart) / 1000));
+
+  clearInterval(qInt);
+
+  mcqIdx++;
+
+  if(mcqIdx < questions.length) showQ();
+  else finishMCQ(false);
+}
+
+async function finishMCQ(autoEnd){
+  clearInterval(qInt);
+  clearInterval(overallInt);
+
+  if(autoEnd && mcqIdx < 30 && answers.length === mcqIdx){
+    answers.push(null);
+    qTimes.push(Math.min(60,(Date.now() - qStart) / 1000));
+  }
+
+  while(answers.length < questions.length) answers.push(null);
+  while(qTimes.length < questions.length) qTimes.push(0);
+
+  const mcqStatus = document.getElementById("mcqStatus");
+  if(mcqStatus){ mcqStatus.textContent = "Submitting answers for secure scoring..."; mcqStatus.style.display = "block"; }
+  try {
+    await gradeMcqOnServer();
+  } catch(error) {
+    console.error(error);
+    if(mcqStatus){ mcqStatus.textContent = "MCQ scoring failed. Please contact the administrator; do not continue the test."; }
+    alert("MCQ scoring failed. Please contact the administrator before continuing. " + (error.message || ""));
+    return;
+  }
+  if(mcqStatus) mcqStatus.style.display = "none";
+
+  document.getElementById("mcq").classList.add("hidden");
+  document.getElementById("excel").classList.remove("hidden");
+  document.getElementById("cand2").textContent = name;
+
+  excelSubmitted = false;
+  excelStart = Date.now();
+
+  clearInterval(excelInt);
+  excelInt = setInterval(updateExcel,250);
+  updateExcel();
+}
+
+function updateExcel(){
+  if(excelSubmitted) return;
+
+  const remain = 600 - (Date.now() - excelStart) / 1000;
+  document.getElementById("excelTimer").textContent = fmt(remain);
+
+  if(remain <= 0) finishExcel(true);
+}
+
+function formulaCorrect(formula, i){
+  const f = String(formula || "").toLowerCase().replace(/\s/g,"");
+
+  const patterns = [
+    /sum\(c9:c18\)/,
+    /sum\(d9:d18\)/,
+    /average\(c9:c18\)/,
+    /sumif\(b9:b18[,;]"?sales"?[,;]c9:c18\)/,
+    /countif\(b9:b18[,;]"?admin"?\)/,
+    /sum\(c9:c18\)-sum\(d9:d18\)/,
+    /(?:c9:c18|898000|e22).*(?:\*|×)0?\.?05|5%/,
+    /e22\+e28|e22\*1\.05/,
+    /if\(/,
+    /max\(c9:c18\)/
+  ];
+
+  return Boolean(patterns[i] && patterns[i].test(f));
+}
+
+const excelExpected = [
+  898000, 550000, 89800, 483000, 3,
+  348000, 44900, 942900, "profit", 150000
+];
+
+function gradeExcelWorkbook(workbook){
+  const sheet = workbook.Sheets["Excel Test"];
+
+  if(!sheet){
+    throw new Error('Worksheet "Excel Test" was not found.');
+  }
+
+  let score = 0;
+  let details = [];
+  let actual = [];
+
+  for(let i=0; i<10; i++){
+    const cell = sheet["E" + (22+i)];
+    let correct = false;
+
+    if(cell){
+      const value = cell.v;
+      const formula = cell.f || "";
+
+      if(i === 8){
+        correct =
+          String(value ?? "").trim().toLowerCase() === "profit" ||
+          formulaCorrect(formula,i);
+      }else{
+        const numeric = Number(String(value ?? "").replace(/[$,\s]/g,""));
+
+        correct =
+          Number.isFinite(numeric) &&
+          Math.abs(numeric - Number(excelExpected[i])) < 0.01;
+
+        if(!correct) correct = formulaCorrect(formula,i);
+      }
+    }
+
+    if(correct) score++;
+    details.push(correct);
+    actual.push({
+      value: cell && cell.v !== undefined ? String(cell.v) : "",
+      formula: cell && cell.f ? String(cell.f) : "",
+      expected: String(excelExpected[i])
+    });
+  }
+
+  return {score:score, details:details, actual:actual};
+}
+
+function fileToBase64(file){
+  return new Promise(function(resolve,reject){
+    const reader = new FileReader();
+    reader.onload = function(){
+      const result = String(reader.result || "");
+      resolve(result.split(",")[1] || "");
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function submitExcelFile(){
+  if(excelSubmitted) return;
+
+  const input = document.getElementById("excelFile");
+  const status = document.getElementById("excelUploadStatus");
+
+  if(!input.files.length){
+    alert("Download the Excel file, complete it in Excel, save it, and upload it here.");
+    return;
+  }
+
+  const elapsed = (Date.now() - excelStart) / 1000;
+
+  if(elapsed > 600){
+    finishExcel(true);
+    return;
+  }
+
+  const file = input.files[0];
+
+  if(
+    !file.name.toLowerCase().endsWith(".xlsx") &&
+    !file.name.toLowerCase().endsWith(".xls")
+  ){
+    alert("Please upload an Excel .xlsx or .xls file.");
+    return;
+  }
+
+  status.className = "status saving";
+  status.textContent = "Checking the Excel workbook...";
+
+  try{
+    if(typeof XLSX === "undefined") await loadSheetJS();
+
+    const buffer = await file.arrayBuffer();
+
+    const workbook = XLSX.read(
+      buffer,
+      {type:"array", cellFormula:true}
+    );
+
+    const result = gradeExcelWorkbook(workbook);
+    savedExcelActual = result.actual || [];
+
+    uploadedExcelBase64 = await fileToBase64(file);
+    uploadedExcelName = file.name;
+    uploadedExcelMime = file.type || "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+    excelSubmitted = true;
+
+    const excelTime =
+      Math.min(
+        600,
+        (Date.now() - excelStart) / 1000
+      );
+
+    const mcqScore = getMcqScore();
+
+    const mcqTime =
+      Math.min(
+        1800,
+        (excelStart - mcqStart) / 1000
+      );
+
+    clearInterval(excelInt);
+
+    document.getElementById("excel").classList.add("hidden");
+
+    startTypingTest(
+      mcqScore,
+      result.score,
+      mcqTime,
+      excelTime,
+      result.details,
+      false
+    );
+
+  }catch(error){
+    console.error(error);
+
+    status.className = "status err";
+    status.textContent =
+      "Excel file could not be read. Use the provided workbook and save it as .xlsx.";
+  }
+}
+
+function finishExcel(autoEnd){
+  if(excelSubmitted) return;
+
+  excelSubmitted = true;
+  clearInterval(excelInt);
+
+  const mcqScore = getMcqScore();
+
+  const mcqTime =
+    Math.min(
+      1800,
+      (excelStart - mcqStart) / 1000
+    );
+
+  document.getElementById("excel").classList.add("hidden");
+
+  startTypingTest(
+    mcqScore,
+    0,
+    mcqTime,
+    600,
+    Array(10).fill(false),
+    true
+  );
+}
+
+function getMcqScore(){
+  return mcqGraded ? savedMcqScore : 0;
+}
+
+/* =========================
+   TEST 3
+========================= */
+
+function startTypingTest(
+  mcqScore,
+  excelScore,
+  mcqTime,
+  excelTime,
+  excelDetails,
+  timedOut
+){
+  savedMcqScore = mcqScore;
+  savedExcelScore = excelScore;
+  savedMcqTime = mcqTime;
+  savedExcelTime = excelTime;
+  savedExcelDetails = excelDetails;
+  if(!savedExcelActual.length) savedExcelActual = Array.from({length:10}, (_,i)=>({value:"",formula:"",expected:String(excelExpected[i])}));
+  excelTimedOut = timedOut;
+
+  document.getElementById("typing").classList.remove("hidden");
+  document.getElementById("cand3").textContent = name;
+
+  document.getElementById("myanmarTarget").textContent = MYANMAR_TEXT;
+  document.getElementById("englishTarget").textContent = ENGLISH_TEXT;
+
+  typingSection = "myanmar";
+  document.getElementById("typingMyanmar").classList.remove("hidden");
+  document.getElementById("typingEnglish").classList.add("hidden");
+
+  document.getElementById("myanmarInput").value = "";
+  document.getElementById("englishInput").value = "";
+
+  myanmarStart = Date.now();
+
+  clearInterval(typingInt);
+  typingInt = setInterval(updateTyping,200);
+
+  updateTyping();
+
+  document.getElementById("myanmarInput").focus();
+}
+
+function updateTyping(){
+
+  if(typingSection === "myanmar"){
+
+    const remain =
+      150 - (Date.now() - myanmarStart) / 1000;
+
+    document.getElementById("typingTimer").textContent = fmt(remain);
+
+    const acc =
+      calcTypingAccuracy(
+        MYANMAR_TEXT,
+        document.getElementById("myanmarInput").value
+      );
+
+    document.getElementById("myanmarAccuracy").textContent =
+      acc.toFixed(1) + "%";
+
+    if(remain <= 0) startEnglishTyping();
+
+  }else{
+
+    const remain =
+      150 - (Date.now() - englishStart) / 1000;
+
+    document.getElementById("typingTimer").textContent = fmt(remain);
+
+    const acc =
+      calcTypingAccuracy(
+        ENGLISH_TEXT,
+        document.getElementById("englishInput").value
+      );
+
+    document.getElementById("englishAccuracy").textContent =
+      acc.toFixed(1) + "%";
+
+    if(remain <= 0) finishTyping(true);
+  }
+}
+
+function startEnglishTyping(){
+
+  typingSection = "english";
+
+  document.getElementById("typingMyanmar").classList.add("hidden");
+  document.getElementById("typingEnglish").classList.remove("hidden");
+
+  englishStart = Date.now();
+
+  document.getElementById("typingTimer").textContent = "02:30";
+
+  document.getElementById("englishInput").focus();
+}
+
+function finishTyping(autoEnd){
+
+  clearInterval(typingInt);
+
+  const myanmarInput =
+    document.getElementById("myanmarInput").value;
+
+  const englishInput =
+    document.getElementById("englishInput").value;
+
+  actualMyanmarText = myanmarInput;
+  actualEnglishText = englishInput;
+  testEnd = new Date();
+  testActive = false;
+
+  const myanmarTime =
+    Math.min(
+      150,
+      ((englishStart || Date.now()) - myanmarStart) / 1000
+    );
+
+  const englishTime =
+    Math.min(
+      150,
+      (Date.now() - englishStart) / 1000
+    );
+
+  const myanmarMetrics =
+    typingMetrics(
+      MYANMAR_TEXT,
+      myanmarInput,
+      myanmarTime
+    );
+
+  const englishMetrics =
+    typingMetrics(
+      ENGLISH_TEXT,
+      englishInput,
+      englishTime
+    );
+
+  const myanmarAccuracy =
+    myanmarMetrics.accuracy;
+
+  const englishAccuracy =
+    englishMetrics.accuracy;
+
+  const myanmarScore =
+    2.5 * myanmarAccuracy / 100;
+
+  const englishScore =
+    2.5 * englishAccuracy / 100;
+
+  const typingTotal =
+    myanmarScore + englishScore;
+
+  const typingTime =
+    myanmarTime + englishTime;
+
+  const finalScore =
+    (Number(savedMcqScore) || 0) +
+    (Number(savedExcelScore) || 0) +
+    (Number(typingTotal) || 0);
+
+  const totalTime =
+    savedMcqTime +
+    savedExcelTime +
+    typingTime;
+
+  document.getElementById("typing").classList.add("hidden");
+
+  showResult(
+    savedMcqScore,
+    savedExcelScore,
+    typingTotal,
+    finalScore,
+    savedMcqTime,
+    savedExcelTime,
+    typingTime,
+    totalTime,
+    myanmarScore,
+    myanmarAccuracy,
+    myanmarTime,
+    englishScore,
+    englishAccuracy,
+    englishTime,
+    autoEnd,
+    savedExcelDetails,
+    myanmarMetrics,
+    englishMetrics
+  );
+}
+
+/* =========================
+   RESULT
+========================= */
+
+function getSystemComment(finalScore){
+  const mcq = Number(savedMcqScore || 0);
+  const excel = Number(savedExcelScore || 0);
+  const total = Number(finalScore || 0);
+  const typing = Math.max(0, total - mcq - excel);
+
+  const sectionStatus = function(score, max){
+    const pct = max ? (Number(score||0)/max)*100 : 0;
+    if(pct >= 80) return "Strong";
+    if(pct >= 70) return "Good";
+    if(pct >= 60) return "Satisfactory";
+    if(pct >= 50) return "Basic";
+    return "Needs Improvement";
+  };
+
+  return "Section 1 – Accounting MCQ: " + mcq.toFixed(2) + "/30 (" +
+    sectionStatus(mcq,30) + "). " +
+    "Section 2 – Excel Practical Test: " + excel.toFixed(2) + "/10 (" +
+    sectionStatus(excel,10) + "). " +
+    "Section 3 – Typing Test: " + typing.toFixed(2) + "/5 (" +
+    sectionStatus(typing,5) + "). " +
+    "Refer to each section's Detailed Review & Comment above for the specific assessment findings and review focus.";
+}
+
+function getSectionBand_(pct){
+  pct = Number(pct) || 0;
+  if(pct >= 80) return "Strong";
+  if(pct >= 70) return "Good";
+  if(pct >= 60) return "Satisfactory";
+  if(pct >= 50) return "Basic";
+  return "Needs Improvement";
+}
+
+
+function buildMcqReview(score){
+  const pct = (Number(score||0)/30)*100;
+  const correct = Math.round(Number(score||0));
+  const wrong = Math.max(0, 30 - correct);
+  let level, comment, focus;
+
+  if(pct >= 80){
+    level = "Strong";
+    comment = "The candidate demonstrated strong understanding of the accounting concepts assessed in Section 1.";
+    focus = "Maintain accuracy and continue reviewing advanced accounting adjustments, financial statement relationships and control concepts.";
+  }else if(pct >= 70){
+    level = "Good";
+    comment = "The candidate demonstrated a good understanding of the assessed accounting concepts, with some questions requiring further review.";
+    focus = "Review incorrect questions and reinforce accounting principles, adjustments, inventory, receivables and basic calculations.";
+  }else if(pct >= 60){
+    level = "Satisfactory";
+    comment = "The candidate demonstrated a basic working understanding of the assessed accounting concepts, but several areas need reinforcement.";
+    focus = "Review the incorrect MCQs topic-by-topic and strengthen understanding of journal entries, adjustments, financial statements and accounting calculations.";
+  }else if(pct >= 50){
+    level = "Basic";
+    comment = "The candidate demonstrated partial understanding of the assessed accounting concepts.";
+    focus = "Further study is recommended in core accounting principles, journal entries, adjustments, financial statements and calculation-based questions.";
+  }else{
+    level = "Needs Improvement";
+    comment = "The Section 1 result indicates that the assessed accounting concepts require substantial review and reinforcement.";
+    focus = "Prioritize foundational accounting principles, debit/credit treatment, adjusting entries, financial statements and basic accounting calculations.";
+  }
+
+  return '<h3>Section 1 – Detailed Review &amp; Comment</h3>' +
+    '<p><span class="review-label">Performance Level:</span> '+level+
+    ' ('+pct.toFixed(1)+'%)</p>' +
+    '<p><span class="review-label">Result Detail:</span> '+correct+
+    ' of 30 questions were answered correctly; '+wrong+
+    ' questions were not correct.</p>' +
+    '<p><span class="review-label">Comment:</span> '+comment+'</p>' +
+    '<p><span class="review-label">Review Focus:</span> '+focus+'</p>';
+}
+
+function buildExcelReview(score, excelDetails){
+  const pct = (Number(score||0)/10)*100;
+  const marks = Array.isArray(excelDetails) ? excelDetails.map(v => v ? 1 : 0) : [];
+  const completed = marks.filter(Boolean).length;
+  let level, comment, focus;
+
+  if(pct >= 80){
+    level = "Strong";
+    comment = "The candidate demonstrated strong practical Excel performance across the assessed tasks.";
+    focus = "Maintain accuracy and continue using clear formulas, correct cell references and consistent worksheet practices.";
+  }else if(pct >= 70){
+    level = "Good";
+    comment = "The candidate demonstrated good practical Excel ability, with some tasks requiring additional checking.";
+    focus = "Review any missed tasks and verify formulas, cell references, calculations and formatting requirements.";
+  }else if(pct >= 60){
+    level = "Satisfactory";
+    comment = "The candidate demonstrated a satisfactory practical level, although several Excel requirements should be reviewed.";
+    focus = "Practice formula accuracy, cell references, calculations, formatting and task-by-task checking.";
+  }else if(pct >= 50){
+    level = "Basic";
+    comment = "The candidate demonstrated partial practical Excel ability.";
+    focus = "Build confidence with basic formulas, cell references, calculations and worksheet formatting.";
+  }else{
+    level = "Needs Improvement";
+    comment = "The Section 2 result indicates that the assessed Excel tasks require further practical practice.";
+    focus = "Prioritize basic formulas, cell references, calculations, formatting and careful checking before submission.";
+  }
+
+  const taskDetail = marks.length
+    ? 'Task result: '+completed+' of 10 tasks received full task credit based on the recorded task marks.'
+    : 'Task-by-task marks were recorded in the result data.';
+
+  return '<h3>Section 2 – Detailed Review &amp; Comment</h3>' +
+    '<p><span class="review-label">Performance Level:</span> '+level+
+    ' ('+pct.toFixed(1)+'%)</p>' +
+    '<p><span class="review-label">Result Detail:</span> '+taskDetail+'</p>' +
+    '<p><span class="review-label">Comment:</span> '+comment+'</p>' +
+    '<p><span class="review-label">Review Focus:</span> '+focus+'</p>';
+}
+
+function buildTypingReview(totalScore, myScore, myAcc, myCpm, enScore, enAcc, enCpm, myMetrics, enMetrics){
+  const pct = (Number(totalScore||0)/5)*100;
+  const myTyped = Number(myMetrics && myMetrics.typed || 0);
+  const myCorrect = Number(myMetrics && myMetrics.correct || 0);
+  const myErrors = Number(myMetrics && myMetrics.errors || 0);
+  const myMissing = Number(myMetrics && myMetrics.missing || 0);
+  const enTyped = Number(enMetrics && enMetrics.typed || 0);
+  const enCorrect = Number(enMetrics && enMetrics.correct || 0);
+  const enErrors = Number(enMetrics && enMetrics.errors || 0);
+  const enMissing = Number(enMetrics && enMetrics.missing || 0);
+
+  let level, comment, focus;
+  if(pct >= 80){
+    level = "Strong";
+    comment = "The candidate demonstrated strong typing performance across both Myanmar and English tests.";
+    focus = "Maintain accuracy while gradually increasing speed.";
+  }else if(pct >= 70){
+    level = "Good";
+    comment = "The candidate demonstrated good typing performance, with some room for improvement in accuracy or speed.";
+    focus = "Continue accuracy practice and improve speed without increasing errors.";
+  }else if(pct >= 60){
+    level = "Satisfactory";
+    comment = "The candidate demonstrated a basic satisfactory typing level, but accuracy and/or speed should be improved.";
+    focus = "Prioritize character accuracy and then build consistent typing speed.";
+  }else if(pct >= 50){
+    level = "Basic";
+    comment = "The candidate demonstrated partial typing proficiency.";
+    focus = "Practice both Myanmar and English typing regularly, focusing on accuracy before speed.";
+  }else{
+    level = "Needs Improvement";
+    comment = "The Section 3 result indicates that typing accuracy and speed require further improvement.";
+    focus = "Prioritize accurate character-by-character typing and build speed gradually.";
+  }
+
+  return '<h3>Section 3 – Detailed Review &amp; Comment</h3>' +
+    '<p><span class="review-label">Performance Level:</span> '+level+
+    ' ('+pct.toFixed(1)+'%)</p>' +
+    '<p><span class="review-label">Myanmar:</span> Score '+Number(myScore||0).toFixed(2)+
+    '/2.5; Accuracy '+Number(myAcc||0).toFixed(1)+'%; '+myTyped+
+    ' typed, '+myCorrect+' correct, '+myErrors+' errors, '+myMissing+
+    ' missing; Speed '+Number(myCpm||0).toFixed(1)+' CPM.</p>' +
+    '<p><span class="review-label">English:</span> Score '+Number(enScore||0).toFixed(2)+
+    '/2.5; Accuracy '+Number(enAcc||0).toFixed(1)+'%; '+enTyped+
+    ' typed, '+enCorrect+' correct, '+enErrors+' errors, '+enMissing+
+    ' missing; Speed '+Number(enCpm||0).toFixed(1)+' CPM.</p>' +
+    '<p><span class="review-label">Comment:</span> '+comment+'</p>' +
+    '<p><span class="review-label">Review Focus:</span> '+focus+'</p>';
+}
+
+function showResult(
+  mcqScore,
+  excelScore,
+  typingScoreTotal,
+  finalScore,
+  mcqTime,
+  excelTime,
+  typingTime,
+  totalTime,
+  myanmarScore,
+  myanmarAccuracy,
+  myanmarTime,
+  englishScore,
+  englishAccuracy,
+  englishTime,
+  autoEnd,
+  excelDetails,
+  myanmarMetrics,
+  englishMetrics
+){
+
+  // Normalize all result values before rendering.
+  mcqScore = Number(mcqScore) || 0;
+  excelScore = Number(excelScore) || 0;
+  typingScoreTotal = Number(typingScoreTotal) || 0;
+  finalScore = Number(finalScore) || 0;
+  mcqTime = Number(mcqTime) || 0;
+  excelTime = Number(excelTime) || 0;
+  typingTime = Number(typingTime) || 0;
+  totalTime = Number(totalTime) || 0;
+  myanmarScore = Number(myanmarScore) || 0;
+  myanmarAccuracy = Number(myanmarAccuracy) || 0;
+  myanmarTime = Number(myanmarTime) || 0;
+  englishScore = Number(englishScore) || 0;
+  englishAccuracy = Number(englishAccuracy) || 0;
+  englishTime = Number(englishTime) || 0;
+  myanmarMetrics = myanmarMetrics || {typed:0,correct:0,errors:0,missing:0,cpm:0};
+  englishMetrics = englishMetrics || {typed:0,correct:0,errors:0,missing:0,cpm:0};
+  excelDetails = Array.isArray(excelDetails) ? excelDetails : Array(10).fill(false);
+
+  document.getElementById("result").classList.remove("hidden");
+
+  if(!currentResultId){
+    currentResultId =
+      "CSH-" +
+      Date.now() +
+      "-" +
+      Math.random().toString(36).slice(2,8).toUpperCase();
+  }
+
+  currentSystemComment =
+    getSystemComment(finalScore);
+
+  document.getElementById("systemCommentText").textContent =
+    currentSystemComment;
+
+  document.getElementById("rName").textContent = name;
+  document.getElementById("rDate").textContent = formatDate(testStart || new Date());
+  document.getElementById("rStart").textContent = formatTimeOnly(testStart || new Date());
+  document.getElementById("rEnd").textContent = formatTimeOnly(testEnd || new Date());
+  document.getElementById("rTimeTaken").textContent = fmt(totalTime);
+  document.getElementById("rMcq").textContent = mcqScore.toFixed(0);
+  document.getElementById("rExcel").textContent = excelScore.toFixed(0);
+  document.getElementById("rTyping").textContent = typingScoreTotal.toFixed(2);
+  document.getElementById("rTotal").textContent = finalScore.toFixed(2);
+
+  document.getElementById("rMcqTime").textContent = fmt(mcqTime);
+  document.getElementById("rExcelTime").textContent = fmt(excelTime);
+  document.getElementById("rTypingTime").textContent = fmt(typingTime);
+
+  document.getElementById("rMcqFinal").textContent = mcqScore.toFixed(0);
+  document.getElementById("rMcqTimeFinal").textContent = fmt(mcqTime);
+
+  document.getElementById("rExcelFinal").textContent = excelScore.toFixed(0);
+  document.getElementById("rExcelTimeFinal").textContent = fmt(excelTime);
+
+  document.getElementById("rTypingFinal").textContent = typingScoreTotal.toFixed(2);
+  document.getElementById("rTypingTimeFinal").textContent = fmt(typingTime);
+
+  document.getElementById("rTotalTime").textContent = fmt(totalTime);
+
+  document.getElementById("rMyanmar").textContent = myanmarScore.toFixed(2);
+  document.getElementById("rMyanmarAccuracy").textContent = myanmarAccuracy.toFixed(1) + "%";
+  document.getElementById("rMyanmarTyped").textContent = myanmarMetrics.typed;
+  document.getElementById("rMyanmarCorrect").textContent = myanmarMetrics.correct;
+  document.getElementById("rMyanmarErrors").textContent = myanmarMetrics.errors;
+  document.getElementById("rMyanmarMissing").textContent = myanmarMetrics.missing;
+  document.getElementById("rMyanmarSpeed").textContent = myanmarMetrics.cpm.toFixed(1) + " CPM";
+  document.getElementById("rMyanmarTime").textContent = fmt(myanmarTime);
+
+  document.getElementById("rEnglish").textContent = englishScore.toFixed(2);
+  document.getElementById("rEnglishAccuracy").textContent = englishAccuracy.toFixed(1) + "%";
+  document.getElementById("rEnglishTyped").textContent = englishMetrics.typed;
+  document.getElementById("rEnglishCorrect").textContent = englishMetrics.correct;
+  document.getElementById("rEnglishErrors").textContent = englishMetrics.errors;
+  document.getElementById("rEnglishMissing").textContent = englishMetrics.missing;
+  document.getElementById("rEnglishSpeed").textContent = englishMetrics.cpm.toFixed(1) + " CPM";
+  document.getElementById("rEnglishTime").textContent = fmt(englishTime);
+
+  document.getElementById("rCompletion").textContent =
+    autoEnd
+      ? "Completed — typing time limit reached"
+      : (excelTimedOut ? "Completed — Excel time limit reached" : "Completed");
+
+  document.getElementById("mcqBreakdown").innerHTML =
+    "<h3>Section 1 – Accounting MCQ Detailed Answer Record</h3>" +
+    '<table><tr><th>Q</th><th>Question</th><th>Candidate Selected</th><th>Correct Answer</th><th>Mark</th><th>Time</th></tr>' +
+    questions.map(function(q,i){
+      const selected = answers[i] === null || answers[i] === undefined ? "Not Answered" : String.fromCharCode(65+answers[i]) + ". " + q.opts[answers[i]];
+      const mark = Number(mcqMarks[i]) === 1 ? 1 : 0;
+      return '<tr><td>Q'+(i+1)+'</td><td style="text-align:left">'+escapeHtml(q.q)+'<br><small>A. '+escapeHtml(q.opts[0])+' | B. '+escapeHtml(q.opts[1])+' | C. '+escapeHtml(q.opts[2])+' | D. '+escapeHtml(q.opts[3])+'</small></td><td style="text-align:left">'+escapeHtml(selected)+'</td><td>Withheld</td><td>'+mark+'/1</td><td>'+Number(qTimes[i]||0).toFixed(1)+' sec</td></tr>';
+    }).join("") + '</table>';
+
+  document.getElementById("excelBreakdown").innerHTML =
+    "<h3>Section 2 – Excel Practical Test Detailed Record</h3>" +
+    '<table><tr><th>Task</th><th>Candidate Actual Value</th><th>Formula</th><th>Expected</th><th>Mark</th></tr>' +
+    savedExcelActual.map(function(item,i){
+      return '<tr><td>Task '+(i+1)+'</td><td style="text-align:left">'+escapeHtml(item.value)+'</td><td style="text-align:left">'+escapeHtml(item.formula)+'</td><td>'+escapeHtml(item.expected)+'</td><td>'+(excelDetails[i]?1:0)+'/1</td></tr>';
+    }).join("") + '</table>' + '<p><b>Uploaded Excel File:</b> '+escapeHtml(uploadedExcelName || "Original workbook")+' — stored in Google Drive and linked in the Recruitment Results sheet.</p>';
+
+  document.getElementById("typingBreakdown").innerHTML =
+    '<h3>Section 3 – Actual Typing Record</h3>' +
+    '<div><b>Myanmar text typed:</b><pre class="actual-text">'+escapeHtml(actualMyanmarText)+'</pre></div>' +
+    '<div><b>English text typed:</b><pre class="actual-text">'+escapeHtml(actualEnglishText)+'</pre></div>';
+
+  document.getElementById("mcqSectionReview").innerHTML =
+    buildMcqReview(mcqScore);
+
+  document.getElementById("excelSectionReview").innerHTML =
+    buildExcelReview(excelScore, excelDetails);
+
+  document.getElementById("typingSectionReview").innerHTML =
+    buildTypingReview(
+      typingScoreTotal,
+      myanmarScore,
+      myanmarAccuracy,
+      myanmarMetrics.cpm,
+      englishScore,
+      englishAccuracy,
+      englishMetrics.cpm,
+      myanmarMetrics,
+      englishMetrics
+    );
+
+  sendResult(
+    mcqScore,
+    excelScore,
+    typingScoreTotal,
+    finalScore,
+    mcqTime,
+    excelTime,
+    typingTime,
+    totalTime,
+    myanmarScore,
+    myanmarAccuracy,
+    myanmarTime,
+    englishScore,
+    englishAccuracy,
+    englishTime,
+    autoEnd,
+    myanmarMetrics,
+    englishMetrics
+  );
+}
+
+async function sendResult(
+  mcqScore,
+  excelScore,
+  typingScoreTotal,
+  finalScore,
+  mcqTime,
+  excelTime,
+  typingTime,
+  totalTime,
+  myanmarScore,
+  myanmarAccuracy,
+  myanmarTime,
+  englishScore,
+  englishAccuracy,
+  englishTime,
+  autoEnd,
+  myanmarMetrics,
+  englishMetrics
+){
+
+  const status = document.getElementById("saveStatus");
+
+  const payload = new URLSearchParams();
+
+  payload.append("action", "saveResult");
+  payload.append("resultId", currentResultId);
+  payload.append("otpRecordId", otpRecordId);
+  payload.append("otpVerified", otpVerified ? "Yes" : "No");
+  payload.append("systemComment", currentSystemComment);
+  payload.append("mcqReview", buildMcqReview(mcqScore).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  payload.append("excelReview", buildExcelReview(excelScore).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  payload.append("typingReview", buildTypingReview(typingScoreTotal, myanmarScore, myanmarAccuracy, myanmarMetrics.cpm, englishScore, englishAccuracy, englishMetrics.cpm, myanmarMetrics, englishMetrics).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  payload.append("name", name);
+  payload.append("testDate", formatDate(testStart || new Date()));
+  payload.append("startTime", formatTimeOnly(testStart || new Date()));
+  payload.append("endTime", formatTimeOnly(testEnd || new Date()));
+  payload.append("mcqScore", mcqScore);
+  payload.append("excelScore", excelScore);
+  payload.append("typingScore", typingScoreTotal.toFixed(2));
+  payload.append("finalScore", finalScore.toFixed(2));
+
+  payload.append("mcqTime", fmt(mcqTime));
+  payload.append("excelTime", fmt(excelTime));
+  payload.append("typingTime", fmt(typingTime));
+  payload.append("totalTime", fmt(totalTime));
+
+  payload.append(
+    "completion",
+    autoEnd
+      ? "Typing time reached"
+      : (excelTimedOut ? "Excel time reached" : "Completed")
+  );
+
+  payload.append(
+    "mcqMarks",
+    JSON.stringify(
+      mcqMarks
+    )
+  );
+
+  payload.append(
+    "mcqTimes",
+    JSON.stringify(
+      qTimes.map(function(t){
+        return Number(t.toFixed(1));
+      })
+    )
+  );
+
+  payload.append(
+    "excelMarks",
+    JSON.stringify(
+      savedExcelDetails.map(function(ok){
+        return ok ? 1 : 0;
+      })
+    )
+  );
+
+  // Full candidate-facing actual records
+  payload.append(
+    "mcqAnswers",
+    JSON.stringify(
+      questions.map(function(q, i){
+        return answers[i] === null || answers[i] === undefined
+          ? ""
+          : String.fromCharCode(65 + answers[i]);
+      })
+    )
+  );
+
+  payload.append(
+    "excelActual",
+    JSON.stringify(savedExcelActual || [])
+  );
+
+  payload.append("excelFileName", uploadedExcelName || "");
+  payload.append("excelFileMime", uploadedExcelMime || "");
+  payload.append("myanmarText", actualMyanmarText || "");
+  payload.append("englishText", actualEnglishText || "");
+
+  payload.append("myanmarScore", myanmarScore.toFixed(2));
+  payload.append("myanmarAccuracy", myanmarAccuracy.toFixed(1));
+  payload.append("myanmarTime", fmt(myanmarTime));
+
+  payload.append("englishScore", englishScore.toFixed(2));
+  payload.append("englishAccuracy", englishAccuracy.toFixed(1));
+  payload.append("englishTime", fmt(englishTime));
+
+  payload.append("myanmarTyped", myanmarMetrics.typed);
+  payload.append("myanmarCorrect", myanmarMetrics.correct);
+  payload.append("myanmarErrors", myanmarMetrics.errors);
+  payload.append("myanmarMissing", myanmarMetrics.missing);
+  payload.append("myanmarCPM", myanmarMetrics.cpm.toFixed(1));
+
+  payload.append("englishTyped", englishMetrics.typed);
+  payload.append("englishCorrect", englishMetrics.correct);
+  payload.append("englishErrors", englishMetrics.errors);
+  payload.append("englishMissing", englishMetrics.missing);
+  payload.append("englishCPM", englishMetrics.cpm.toFixed(1));
+
+  try{
+
+    // STEP 1: Save the candidate result first.
+    // No Excel Base64 is included in this request.
+    await fetch(
+      WEB_APP_URL,
+      {
+        method:"POST",
+        mode:"no-cors",
+        headers:{
+          "Content-Type":
+            "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: payload.toString()
+      }
+    );
+
+    status.className = "status ok";
+    status.textContent =
+      "Final result submitted to Google Sheet. Checking upload...";
+
+    // STEP 2: Upload the Excel separately.
+    // If this fails, the candidate result is still safely recorded.
+    if(uploadedExcelBase64){
+      try{
+        const uploadPayload = new URLSearchParams();
+        uploadPayload.append("action","uploadExcel");
+        uploadPayload.append("resultId",currentResultId);
+        uploadPayload.append("name",name);
+        uploadPayload.append("fileName",uploadedExcelName || "cashier_test.xlsx");
+        uploadPayload.append("mimeType",uploadedExcelMime || "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        uploadPayload.append("fileBase64",uploadedExcelBase64);
+
+        await fetch(
+          WEB_APP_URL,
+          {
+            method:"POST",
+            mode:"no-cors",
+            headers:{
+              "Content-Type":
+                "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            body: uploadPayload.toString()
+          }
+        );
+
+        status.textContent =
+          "Final result saved. Excel upload submitted successfully.";
+      }catch(uploadError){
+        console.error(uploadError);
+        status.textContent =
+          "Final result saved to Google Sheet. Excel upload could not be confirmed.";
+      }
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    status.className = "status err";
+    status.textContent =
+      "Could not save the result to Google Sheet. Please contact the administrator.";
+
+  }
+}
+
+async function buildResultPdfBlob_(){
+  const element = document.getElementById("printArea");
+  if(!element) throw new Error("Result area not found.");
+
+  const candidate = safeFileName(document.getElementById("candidateName").value || name || "Candidate");
+  const filename = candidate + "_Cashier_Test_Result.pdf";
+
+  const options = {
+    margin: [8, 8, 8, 8],
+    filename: filename,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      scrollX: 0,
+      scrollY: 0
+    },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: ["css", "legacy"] }
+  };
+
+  // Build the exact same PDF blob used by both Download and Email.
+  return await html2pdf().set(options).from(element).outputPdf("blob");
+}
+
+function downloadBlob_(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+}
+
+async function downloadPDF(){
+  const status = document.getElementById("emailStatus");
+  const candidate = safeFileName(document.getElementById("candidateName").value || name || "Candidate");
+  const filename = candidate + "_Cashier_Test_Result.pdf";
+
+  try{
+    if(status){
+      status.className = "status saving";
+      status.textContent = "Preparing Result PDF...";
+    }
+    const blob = await buildResultPdfBlob_();
+    downloadBlob_(blob, filename);
+    if(status){
+      status.className = "status ok";
+      status.textContent = "Result PDF downloaded.";
+    }
+  }catch(error){
+    console.error(error);
+    if(status){
+      status.className = "status err";
+      status.textContent = "Could not create the Result PDF.";
+    }
+  }
+}
+
+function blobToBase64_(blob){
+  return new Promise(function(resolve, reject){
+    const reader = new FileReader();
+    reader.onloadend = function(){
+      try{
+        const dataUrl = String(reader.result || "");
+        resolve(dataUrl.split(",")[1] || "");
+      }catch(e){ reject(e); }
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function emailResultPDF(){
+  const status = document.getElementById("emailStatus");
+  const candidate = safeFileName(document.getElementById("candidateName").value || name || "Candidate");
+  const filename = candidate + "_Cashier_Test_Result.pdf";
+
+  try{
+    if(status){
+      status.className = "status saving";
+      status.textContent = "Preparing the same Result PDF for email...";
+    }
+
+    const blob = await buildResultPdfBlob_();
+    const pdfBase64 = await blobToBase64_(blob);
+
+    const payload = new URLSearchParams();
+    payload.append("action", "emailResultPDFBlob");
+    payload.append("resultId", currentResultId || "");
+    payload.append("name", name || candidate);
+    payload.append("fileName", filename);
+    payload.append("pdfBase64", pdfBase64);
+
+    const response = await fetch(WEB_APP_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+      body:payload.toString()
+    });
+
+    const text = await response.text();
+    let result = {};
+    try { result = JSON.parse(text); } catch(e) {}
+
+    if(!result.success){
+      throw new Error(result.error || "Email request failed.");
+    }
+
+    if(status){
+      status.className = "status ok";
+      status.textContent = "The same Result PDF has been emailed to aungkyaw.zin@ainsurance.com.mm.";
+    }
+  }catch(error){
+    console.error(error);
+    if(status){
+      status.className = "status err";
+      status.textContent = "Email failed: " + (error.message || error);
+    }
+  }
+}
+
+</script>
+</body>
+</html>
